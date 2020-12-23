@@ -1,0 +1,28 @@
+.field{
+  width: 100%;
+  font-size:14px; 
+}
+.submit-btn{
+  padding-top:5px;
+}
+.back{
+  float:right;
+  font-size:20px;
+}
+.post-list{
+  overflow: auto;
+  padding: 10px 0;
+  border-bottom: 1px solid #dcdcdc;
+  height:70px;
+}
+.post-delete{
+  float:right;
+  padding-left:3px;
+}
+.post-edit{
+  float:right;
+}
+.error{
+  font-size: 15px;
+  color: tomato;
+}
