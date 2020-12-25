@@ -36,7 +36,6 @@
                     {{ __('登録') }}
                 </button>
             </div>
-            <a class="nav-link" href="{{ route('login') }}">{{ __('ログインする') }}</a>
         </form>
     </div>
 </div>

@@ -1,3 +1,24 @@
+body {
+  padding-top: 130px;
+}
+h1{
+  text-align: center;
+  padding-bottom:10px;
+}
+a{
+  text-decoration: none;
+}
+header{
+  padding-right:30px;
+}
+.main-logo{
+  font-size:20px;
+  padding-top: 11px;
+  padding-left:10px;
+  font-weight: bold;
+  font-family: Courier;
+  height: 50px;
+}
 .field{
   width: 100%;
   font-size:14px; 

@@ -38,7 +38,6 @@
             </a>
         @endif -->
         </form>
-        <a class="nav-link" href="{{ route('register') }}">{{ __('登録') }}</a>
     </div>
 </div>
 

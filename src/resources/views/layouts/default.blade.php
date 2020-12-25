@@ -12,6 +12,7 @@
 
   <div class="container">
     <div class="row">
+      @extends('layouts.header')
       @yield('content')
     </div>
   </div>

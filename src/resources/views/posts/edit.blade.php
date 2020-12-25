@@ -6,7 +6,6 @@
 <div class="col-md-12">
   <h1>
     編集
-    <a href="{{ url('/') }}" class="back">Back</a>
   </h1>
   
   <div class="field">

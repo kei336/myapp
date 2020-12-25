@@ -27,9 +27,10 @@ Route::group(['middleware' => 'auth'], function(){
 });
 
 
-// Route::get('/users/new', 'UsersController@new');
-// Route::post('/users', 'UsersController@create');
-// Route::get('users/login', 'UsersController@login');
+Route::get('users/{user}', 'UsersController@show');
+Route::get('/users/{user}/edit', 'UsersController@edit');
+Route::patch('/users/{user}', 'UsersController@update');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

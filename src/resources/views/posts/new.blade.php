@@ -6,7 +6,6 @@
 <div class="col-md-12">
   <h1>
     新規投稿
-    <a href="{{ url('/') }}" class="back">Back</a>
   </h1>
   <div class="field">
     <form method="post" action="{{ url('/posts') }}">

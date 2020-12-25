@@ -6,16 +6,7 @@
 
 
 <div class="col-md-12">
-  <h1>掲示板</h1>
-  <a href="{{ url('/posts/new') }}">新規投稿</a>
-  <a class="dropdown-item" href="{{ route('logout') }}"
-    onclick="event.preventDefault();
-    document.getElementById('logout-form').submit();">
-    {{ __('Logout') }}
-  </a>
-  <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-    @csrf
-  </form>
+  <h1>投稿一覧</h1>
     <ul>
       @forelse($posts as $post)
       <div class="post-list">
