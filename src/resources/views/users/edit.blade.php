@@ -28,6 +28,7 @@
         <input type="submit" class="btn btn-primary" value="更新">
       </div>
     </form>
+    
   </div>
 </div>
 @endsection

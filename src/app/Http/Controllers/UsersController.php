@@ -11,7 +11,7 @@ class UsersController extends Controller
 
   public function show(User $user){
     $user = User::findorFail($user->id);
-    $posts = Post::where('user_id', $user->id)->paginate(10);
+    $posts = Post::where('user_id', $user->id)->paginate(6);
     return view('users.show')->with([
       'user'=> $user,
       'posts' => $posts
@@ -19,7 +19,7 @@ class UsersController extends Controller
   }
 
   public function edit(User $user){
-      if($user->id === Auth::id()){
+    if($user->id === Auth::id()){
         return view('users.edit');
     }else{
         return redirect('/');

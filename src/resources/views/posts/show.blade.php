@@ -12,5 +12,13 @@
   <p>{{ $post->title }}</p>
   <h3>本文</h3>
   <p>{!! nl2br(e($post->content)) !!}</p>
+  <h3>タグ</h3>
+  @foreach($post->tags as $tag)
+    @if($tag === null)
+      <p>この投稿にタグはありません</p>
+    @else
+      <p>{{ $tag->name }}</p>
+    @endif
+  @endforeach
 </div>
 @endsection

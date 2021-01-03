@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Post;
 use App\User;
+use App\Tag;
 use App\Http\Requests\PostRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,13 +19,13 @@ class PostsController extends Controller
     }
 
     public function index(){
-        if (isset($_GET['page'])){
-            $page = $_GET['page'];
+        if (isset($query['page'])){
+            $page = $query['page'];
         }else{
             $page = 1;
-        }
+        }//==============requestでやる
 
-        //==============requestでやる
+        
         $posts = Post::latest()->paginate(6);
         $user_id = Auth::id();
         // $posts = Post::orderBy('created_at', 'desc')->get();と同じ意味
@@ -42,7 +43,12 @@ class PostsController extends Controller
 
     public function show($id){
         $post = Post::findorFail($id);
-   
+        // $tags = $post->tags()->orderby('tag_id')->get();
+        // $tagName = [];
+        // foreach($tags as $tag){
+        //     $tagName[] = $tag->name;
+        // }
+        // $tag['tags'] = $tagName;
         // データが見つからなかった場合例外を返す
         return view('posts.show')->with([
             'post' => $post,
@@ -50,7 +56,10 @@ class PostsController extends Controller
     }
 
     public function new(){
-        return view('posts.new');
+        $tags = Tag::all();
+        return view('posts.new')->with([
+            'tags' => $tags
+        ]);
     }
 
     public function create(PostRequest $request){
@@ -59,11 +68,12 @@ class PostsController extends Controller
         $post->content = $request->content;
         $post->user_id = Auth::id();
         $post->save();
+        $tag = $request->input('tag');
+        $post->tags()->attach($tag);
         return redirect('/');
     }
 
     public function edit(Post $post, Request $request){
-
         if($post->user_id === Auth::id()){
             return view('posts.edit')->with([
                 'post' => $post,

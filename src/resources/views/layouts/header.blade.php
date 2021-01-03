@@ -30,11 +30,24 @@
             <a class="dropdown-item" href="{{ route('logout') }}"
               onclick="event.preventDefault();
               document.getElementById('logout-form').submit();">
-              {{ __('Logout') }}
+              {{ __('ログアウト') }}
             </a>
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
               @csrf
             </form>
+          </li>
+        </ul>
+      </li>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          タグ<b class="caset"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li>
+            <a href="{{ url('/tags/new') }}">タグ登録</a>
+          </li>
+          <li>
+            <a href="{{ url('/tags') }}">タグ一覧</a>
           </li>
         </ul>
       </li>
