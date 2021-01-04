@@ -33,8 +33,11 @@ header{
 .post-list{
   overflow: auto;
   padding: 10px 0;
+  padding-left: 80px;
   border-bottom: 1px solid #dcdcdc;
-  height:70px;
+}
+.post-name{
+  font-size:20px;
 }
 .post-delete{
   float:right;

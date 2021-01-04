@@ -9,21 +9,27 @@ use Illuminate\Support\Facades\Auth;
 class UsersController extends Controller
 {
 
-  public function show(User $user){
+  public function show(User $user, Request $request){
+    // $page = 1;
+    // if (isset($request->page)){
+    //   $page = $request->page;
+    // }
     $user = User::findorFail($user->id);
     $posts = Post::where('user_id', $user->id)->paginate(6);
+    $user_name = $user->name;
     return view('users.show')->with([
       'user'=> $user,
-      'posts' => $posts
+      'posts' => $posts,
+      // 'page' => $page,''
+      'user_name' => $user_name,
       ]);
   }
 
   public function edit(User $user){
     if($user->id === Auth::id()){
         return view('users.edit');
-    }else{
-        return redirect('/');
     }
+    return redirect('/');
   }
 
   public function update(User $user,Request $request){

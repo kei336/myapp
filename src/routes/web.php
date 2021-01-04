@@ -24,21 +24,23 @@ Route::group(['middleware' => 'auth'], function(){
   Route::post('/posts/edit/{post}', 'PostsController@edit');
   Route::patch('/posts/{post}', 'PostsController@update');
   Route::delete('/posts/delete/{post}', 'PostsController@destroy');
+
+
+  Route::get('/tags', 'TagsController@index');
+  Route::get('/tags/new', 'TagsController@new');
+  Route::post('/tags', 'TagsController@create');
+  Route::get('/tags/edit/{tag}', 'TagsController@edit');
+  Route::post('/tags/edit/{tag}', 'TagsController@edit');
+  Route::patch('/tags/{tag}', 'TagsController@update');
+  Route::delete('/tags/delete/{tag}', 'TagsController@destroy');
+
+
+
+  Route::get('users/{user}', 'UsersController@show');
+  Route::get('/users/{user}/edit', 'UsersController@edit');
+  Route::patch('/users/{user}', 'UsersController@update');
+
 });
-
-Route::get('/tags', 'TagsController@index');
-Route::get('/tags/new', 'TagsController@new');
-Route::post('/tags', 'TagsController@create');
-Route::get('/tags/edit/{tag}', 'TagsController@edit');
-Route::post('/tags/edit/{tag}', 'TagsController@edit');
-Route::patch('/tags/{tag}', 'TagsController@update');
-Route::delete('/tags/delete/{tag}', 'TagsController@destroy');
-
-
-
-Route::get('users/{user}', 'UsersController@show');
-Route::get('/users/{user}/edit', 'UsersController@edit');
-Route::patch('/users/{user}', 'UsersController@update');
 
 
 Auth::routes();

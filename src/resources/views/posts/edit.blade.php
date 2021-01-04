@@ -9,7 +9,7 @@
   </h1>
   
   <div class="field">
-    <form method="post" action="{{ url('/posts', $post->id) }}">
+    <form method="post" action="{{ url('/posts', $post->id) }}" enctype="multipart/form-data">
       {{ csrf_field() }}
       {{ method_field('patch')}}
       <label>タイトル</label>
@@ -22,7 +22,15 @@
       @if ($errors->has('content'))
         <span class="error">{{ $errors->first('content') }}</span>
       @endif
-      <input type="hidden" name="page" value="{{ $page }}">
+      <br>
+      <label>画像</label><br>
+      <input type="file" name="img">
+      <br>
+      <label>タグ</label><br>
+      @foreach($tags as $tag)
+        <input type="checkbox" name="tag[]" value="{{$tag->id}}" ><label>{{$tag->name}}</label>
+      @endforeach
+      <input type="hidden" name="url" value="{{ $url }}">
       <div class="submit-btn">
         <input type="submit" class="btn btn-primary" value="更新">
       </div>

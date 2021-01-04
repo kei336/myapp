@@ -18,26 +18,27 @@ class PostsController extends Controller
         ]);
     }
 
-    public function index(){
-        if (isset($query['page'])){
-            $page = $query['page'];
-        }else{
-            $page = 1;
-        }//==============requestでやる
-
-        
+    public function index(Request $request){
+        // $page = 1;
+        // if (isset($request->page)){
+        //     $page = $request->page;
+        // }
+            
         $posts = Post::latest()->paginate(6);
+        // $user_a = Post::latest();
+        // $aaa = User::findorFail($user_a);
+        // $user_name = $aaa->name;
         $user_id = Auth::id();
         // $posts = Post::orderBy('created_at', 'desc')->get();と同じ意味
         if(Auth::check()){
             return view('posts.index')->with([
                 'posts' => $posts,
                 'user_id' => $user_id,
-                'page' => $page,
+                // 'page' => $page,''
+                // 'user_name' => $user_name,
             ]);
-        }else{
-            return view('auth/login');
         }
+        return view('auth/login');
         
     }
 
@@ -67,6 +68,9 @@ class PostsController extends Controller
         $post->title = $request->title;
         $post->content = $request->content;
         $post->user_id = Auth::id();
+        $image = $request->file('img')->store('public/images');
+        $post->image = substr($image,14);
+        
         $post->save();
         $tag = $request->input('tag');
         $post->tags()->attach($tag);
@@ -75,32 +79,45 @@ class PostsController extends Controller
 
     public function edit(Post $post, Request $request){
         if($post->user_id === Auth::id()){
+            $url = url('/users', $post->user_id);
+            $tags = Tag::all();
+            if(isset($_SERVER['HTTP_REFERER'])){
+                $url = $_SERVER['HTTP_REFERER'];
+            }
             return view('posts.edit')->with([
                 'post' => $post,
-                'page'=> $request->get('page'),
+                // 'page'=> $request->get('page'),
+                'edit' => $request->post('edit'),
+                'url' => $url,
+                'tags' => $tags
             ]);
-        }else{
-            return redirect('/');
         }
-        
+        return redirect('/');
     }
 
     public function update(PostRequest $request, Post $post){
         $post->title = $request->title;
         $post->content = $request->content;
+        $image = $request->file('img')->store('public/images');
+        $post->image = substr($image,14);
         $post->save();
-        $page = $request->get('page');
-        return redirect("/?page=$page");
+        // $page = $request->get('page');
+        $user = Auth::id();
+        // if($request->edit === "1"){
+        //     return redirect("/?page=$page");
+        // }else if ($request->edit === "2"){
+        //     return redirect("/users/$user?page=$page");
+        // }
+        return redirect($request->url);    
     }
 
     public function destroy($id){
         $post = Post::findOrFail($id);
         if($post->user_id === Auth::id()){
             $post->delete();
-            return redirect('/');
-        }else{
-            return redirect('/');
+            return redirect()->back();
         }
+        return redirect('/');
         
     }
 

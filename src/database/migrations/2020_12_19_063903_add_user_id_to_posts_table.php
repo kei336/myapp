@@ -14,7 +14,7 @@ class AddUserIdToPostsTable extends Migration
     public function up()
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->integer('user_id');
+            $table->integer('user_id')->references('id')->on('users');;
         });
     }
 

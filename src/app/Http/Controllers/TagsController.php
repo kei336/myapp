@@ -33,10 +33,13 @@ class TagsController extends Controller
     }
 
     public function edit(Tag $tag, Request $request){
-        return view('tags.edit')->with([
-            'tag' => $tag,
-            'page' => $request->get('page')
-        ]);
+        if($tag->user_id === Auth::id()){
+            return view('tags.edit')->with([
+                'tag' => $tag,
+                'page'=> $request->get('page'),
+            ]);
+        }
+        return redirect('/');
     }
 
     public function update(Tag $tag, TagRequest $request){
@@ -51,9 +54,8 @@ class TagsController extends Controller
         if($tags->user_id === Auth::id()){
             $tags->delete();
             return redirect('/tags');
-        }else{
-            return redirect('/tags');
         }
+        return redirect('/tags');
     }
 
 

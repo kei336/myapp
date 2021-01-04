@@ -11,6 +11,11 @@ class Post extends Model
     //     return $this->hasMany('App\Post'); 
     // }
 
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+
     public function tags(){
         return $this->belongsToMany(Tag::class);
     }
