@@ -12,7 +12,9 @@
   <p>{{ $post->title }}</p>
   <h3>本文</h3>
   <p>{!! nl2br(e($post->content)) !!}</p>
-  <img src="/storage/images/{{$post->image}}" width=60% height=60% class="post-image">
+  @if($post->image != null)
+    <img src="/storage/images/{{$post->image}}" width=60% height=60% class="post-image">
+  @endif
   <h3>タグ</h3>
   @foreach($post->tags as $tag)
     @if($tag === null)

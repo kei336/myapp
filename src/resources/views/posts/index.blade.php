@@ -17,7 +17,7 @@
         </div>
         @if ($post->image != null)
           <a href="{{ action('PostsController@show', $post)}}"style="color:black;text-decoration: none;" class="post-title">
-            <img src="/storage/images/{{$post->image}}" width=60% height=60% class="post-image">
+            <img src="/storage/images/{{$post->image}}" width=50% height=50% class="post-image">
           </a>
         @endif
         <br>

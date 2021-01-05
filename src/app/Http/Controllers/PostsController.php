@@ -68,47 +68,54 @@ class PostsController extends Controller
         $post->title = $request->title;
         $post->content = $request->content;
         $post->user_id = Auth::id();
-        $image = $request->file('img')->store('public/images');
-        $post->image = substr($image,14);
-        
+        if ($request->file('img') != null){
+            $image = $request->file('img')->store('public/images');
+            $post->image = substr($image,14);
+        }
         $post->save();
         $tag = $request->input('tag');
         $post->tags()->attach($tag);
         return redirect('/');
     }
 
-    public function edit(Post $post, Request $request){
-        if($post->user_id === Auth::id()){
-            $url = url('/users', $post->user_id);
-            $tags = Tag::all();
-            if(isset($_SERVER['HTTP_REFERER'])){
-                $url = $_SERVER['HTTP_REFERER'];
-            }
-            return view('posts.edit')->with([
-                'post' => $post,
-                // 'page'=> $request->get('page'),
-                'edit' => $request->post('edit'),
-                'url' => $url,
-                'tags' => $tags
-            ]);
-        }
-        return redirect('/');
-    }
+    // public function edit(Post $post, Request $request){
+    //     if($post->user_id === Auth::id()){
+    //         $url = url('/users', $post->user_id);
+    //         $tags = Tag::all();
+    //         if(isset($_SERVER['HTTP_REFERER'])){
+    //             $url = $_SERVER['HTTP_REFERER'];
+    //         }
+    //         return view('posts.edit')->with([
+    //             'post' => $post,
+    //             // 'page'=> $request->get('page'),
+    //             'edit' => $request->post('edit'),
+    //             'url' => $url,
+    //             'tags' => $tags
+    //         ]);
+    //     }
+    //     return redirect('/');
+    // }
 
     public function update(PostRequest $request, Post $post){
         $post->title = $request->title;
         $post->content = $request->content;
-        $image = $request->file('img')->store('public/images');
-        $post->image = substr($image,14);
+        if ($request->file('img') != null){
+            $image = $request->file('img')->store('public/images');
+            $post->image = substr($image,14);  
+        }
+  
         $post->save();
         // $page = $request->get('page');
         $user = Auth::id();
+        $tag = $request->input('tag');
+        $post->tags()->attach($tag);
         // if($request->edit === "1"){
         //     return redirect("/?page=$page");
         // }else if ($request->edit === "2"){
         //     return redirect("/users/$user?page=$page");
         // }
-        return redirect($request->url);    
+        // return redirect($request->url);    
+        return redirect()->back();    
     }
 
     public function destroy($id){
