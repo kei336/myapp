@@ -97,24 +97,26 @@ class PostsController extends Controller
     // }
 
     public function update(PostRequest $request, Post $post){
-        $post->title = $request->title;
-        $post->content = $request->content;
-        if ($request->file('img') != null){
-            $image = $request->file('img')->store('public/images');
-            $post->image = substr($image,14);  
-        }
-  
-        $post->save();
-        // $page = $request->get('page');
-        $user = Auth::id();
-        $tag = $request->input('tag');
-        $post->tags()->attach($tag);
-        // if($request->edit === "1"){
-        //     return redirect("/?page=$page");
-        // }else if ($request->edit === "2"){
-        //     return redirect("/users/$user?page=$page");
-        // }
-        // return redirect($request->url);    
+        if($post->user_id === Auth::id()){
+            $post->title = $request->title;
+            $post->content = $request->content;
+            if ($request->file('img') != null){
+                $image = $request->file('img')->store('public/images');
+                $post->image = substr($image,14);  
+            }
+    
+            $post->save();
+            // $page = $request->get('page');
+            $user = Auth::id();
+            $tag = $request->input('tag');
+            $post->tags()->attach($tag);
+            // if($request->edit === "1"){
+            //     return redirect("/?page=$page");
+            // }else if ($request->edit === "2"){
+            //     return redirect("/users/$user?page=$page");
+            // }
+            // return redirect($request->url);
+        }    
         return redirect()->back();    
     }
 

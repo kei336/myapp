@@ -29,12 +29,22 @@
   
   
     $('#image' + y).on('change', function(){
+    // 中身が変更された時に実行
       let fr = new FileReader();
+      // FileReaderオブジェクトの生成
+      // FileReaderはFile API
+      // ユーザーのローカル環境にある画像ファイルを非同期的に読み込み表示できる
       fr.onload = function(){
+      // 読み込んだ時のイベント
         $('#preview' + y).attr('src', fr.result);
+        // attrとはHTML要素の属性を取得したり設定できる
+        // srcをfr.resultに変更
+        // FileReaderのresultプロパティはファイルの内容を返す
         $('#gazou' + y).addClass('hidden');
       }
       fr.readAsDataURL(this.files[0]);
+      // readAdDataURLメソッドは指定されたファイルをDataURIとして読み込む
+      // Data URIとは外部データを直接ウェブページに埋め込む手法
     });
   }
 }
