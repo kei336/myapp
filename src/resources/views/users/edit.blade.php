@@ -9,7 +9,7 @@
   </h1>
   
   <div class="field">
-    <form method="post" action="{{ url('/users', $user->id) }}">
+    <!-- <form method="post" action="{{ url('/users', $user->id) }}">
       {{ csrf_field() }}
       {{ method_field('patch')}}
       <label>名前</label>
@@ -27,7 +27,24 @@
       <div class="submit-btn">
         <input type="submit" class="btn btn-primary" value="更新">
       </div>
-    </form>
+    </form> -->
+    {{Form::open(['action' => ['UsersController@update', $user->id] , 'method' => 'patch']) }}
+      {{Form::label('名前')}}
+      {{Form::text('name',$user->name, ['class' => 'form-control'])}}
+      @if ($errors->has('name'))
+          <span class="error">{{ $errors->first('name') }}<br></span>
+      @endif
+      {{Form::label('メールアドレス')}}
+      {{Form::text('email',$user->email, ['class' => 'form-control'])}}
+      @error('email')
+        <span class="error">
+            <strong>{{ $message }}<br></strong>
+        </span>
+      @enderror
+      <div class="submit-btn">
+        {{Form::submit('更新',['class' => 'btn btn-primary'])}}
+      </div>
+    {{Form::close()}}
     
   </div>
 </div>

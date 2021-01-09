@@ -14,11 +14,15 @@
         @if($user_id === $tag->user_id)
 
           <div class="post-delete">
-            <form method="post" action="{{ url('/tags/delete', $tag->id)}}">
+            <!-- <form method="post" action="{{ url('/tags/delete', $tag->id)}}">
             {{ csrf_field() }}
             {{ method_field('delete') }}
             <input type="submit" value="削除" class="btn btn-danger btn-sm">
-            </form>
+            </form> -->
+            {{ Form::open(['action' => ['TagsController@destroy',$tag->id],  'method' => 'delete']) }}
+            {{ Form::submit('削除',['class' => "btn btn-danger btn-sm"]) }}
+            {{ Form::close() }}
+
           </div>
 
           <div class="post-edit">

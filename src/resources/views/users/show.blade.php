@@ -22,11 +22,14 @@
       <a href="{{ action('PostsController@show', $post)}}"style="color:black;text-decoration: none;">タイトル：{{ $post->title }}</a>
       @if($user->id === $post->user_id)
         <div class="post-delete">
-          <form method="post" action="{{ url('/posts/delete', $post->id)}}">
+          <!-- <form method="post" action="{{ url('/posts/delete', $post->id)}}">
             {{ csrf_field() }}
             {{ method_field('delete') }}
             <input type="submit" value="削除" class="btn btn-danger btn-sm">
-          </form>
+          </form> -->
+          {{ Form::open(['action' => ['PostsController@destroy',$post->id],  'method' => 'delete']) }}
+          {{ Form::submit('削除',['class' => "btn btn-danger btn-sm"]) }}
+          {{ Form::close() }}
         </div>
         <div class="post-edit">
           <!-- <form method="post" action="{{ url('/posts/edit', $post) }}">
@@ -42,7 +45,7 @@
            
                 <section id="modal{{$post->id}}" class="hidden">
                   <span id="modal">
-                    <form method="post" action="{{ url('/posts', $post->id) }}" enctype="multipart/form-data">
+                    <!-- <form method="post" action="{{ url('/posts', $post->id) }}" enctype="multipart/form-data">
                       {{ csrf_field() }}
                       {{ method_field('patch')}}
                       <label>タイトル</label>
@@ -75,7 +78,39 @@
                       <div class="submit-btn">
                         <input type="submit" class="btn btn-primary" value="更新">
                       </div>
-                    </form>
+                    </form> -->
+                    {{Form::open(['action' => ['PostsController@update', $post->id] , 'method' => 'post' , 'files' => true ]) }}
+                    {{Form::label('タイトル')}}
+                    {{Form::text('title',$post->title, ['class' => 'form-control'])}}
+                    @if ($errors->has('title'))
+                        <span class="error">{{ $errors->first('title') }}<br></span>
+                    @endif
+                    {{Form::label('本文')}}
+                    {{Form::textarea('content', $post->content, ['class' => 'form-control'])}}
+                    @if ($errors->has('content'))
+                        <span class="error">{{ $errors->first('content') }}</span>
+                    @endif
+                    {{Form::label('画像')}}
+                    <br>
+                    @if ($post->image != null)
+                      <img id="gazou{{$post->id}}" src="/storage/images/{{$post->image}}" width=30% height=30%>
+                    @else
+                      <p id="gazou{{$post->id}}">画像はありません</p>
+                    @endif
+                    <div class="post-edit-image">
+                        <img id="preview{{$post->id}}" width=30% height=30%>
+                    </div>
+                    {{Form::file('img',['id' => "image$post->id", 'accept' => 'image/*'])}}
+                    <br>
+                    {{Form::label('タグ')}}
+                    <br>
+                    @foreach($tags as $tag)
+                    {{Form::checkbox('tag[]',$tag->id)}}{{Form::label($tag->name)}}
+                    @endforeach
+                    <div class="submit-btn">
+                      {{Form::submit('更新',['class' => 'btn btn-primary'])}}
+                    </div>
+                    {{Form::close()}}
                   </span>
               </section>
         </div>
