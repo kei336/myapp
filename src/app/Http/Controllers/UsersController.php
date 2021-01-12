@@ -19,14 +19,30 @@ class UsersController extends Controller
     $posts = Post::where('user_id', $user->id)->latest()->paginate(6);
     $user_name = $user->name;
     $tags = Tag::all();
+
+    $id = $request->post_id;
+    $modal = Post::find($id);
+    
     return view('users.show')->with([
       'user'=> $user,
       'posts' => $posts,
       // 'page' => $page,''
       'user_name' => $user_name,
       'tags' => $tags,
+      // 'post_id' => $post_id,
+       'modal' => $modal,
       ]);
   }
+
+  public function ajax(Request $request){
+    $id = $request->post_id;
+    $modal = Post::find($id);
+    // return response()->json([
+    //   'post_id' => $post_id,
+    // ]);
+    return $modal;
+  }
+
 
   public function edit(User $user){
     if($user->id === Auth::id()){

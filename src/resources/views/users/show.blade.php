@@ -1,6 +1,9 @@
+
 @extends('layouts.default')
 
 @section('title', '掲示板')
+
+
 
 @section('content')
 <div id="edit"></div>
@@ -36,90 +39,92 @@
             {{ csrf_field() }}
             <input type="submit" value="編集" class="btn btn-primary btn-sm">
           </form> -->
-          <div id="open{{$post->id}}">
+          <div id="open">
             <!-- <p class="btn btn-primary btn-sm">edit</p> -->
             <!-- <button class="btn btn-primary btn-sm">編集</button> -->
-            <a href="#edit" class="btn btn-primary btn-sm" value="{{$post->id}}">編集</a>
+            <!-- <a href="#edit" id="edit{{$post->id}}" class="btn btn-primary btn-sm" value="{{$post->id}}">編集</a> -->
+            <button onclick="location.href='#edit'" type="button" value="{{$post->id}}" class="btn btn-primary btn-sm">編集</button>
           </div>
-              <div id="mask" class="hidden"></div>
-           
-                <section id="modal{{$post->id}}" class="hidden">
-                  <span id="modal">
-                    <!-- <form method="post" action="{{ url('/posts', $post->id) }}" enctype="multipart/form-data">
-                      {{ csrf_field() }}
-                      {{ method_field('patch')}}
-                      <label>タイトル</label>
-                      <input type="text" name="title" class="form-control" value="{{ old('title', $post->title) }}">
-                      @if ($errors->has('title'))
-                        <span class="error">{{ $errors->first('title') }}<br></span>
-                      @endif
-                      <label>本文</label>
-                      <textarea name="content" class="form-control" rows="10">{{ old('content', $post->content) }}</textarea>
-                      @if ($errors->has('content'))
-                        <span class="error">{{ $errors->first('content') }}</span>
-                      @endif
-                      <br>
-                      <label>画像</label><br>
-                      @if ($post->image != null)
-                        <img id="gazou{{$post->id}}" src="/storage/images/{{$post->image}}" width=30% height=30%>
-                      @else
-                        <p id="gazou{{$post->id}}">画像はありません</p>
-                      @endif
-                      <div class="post-edit-image">
-                        <img id="preview{{$post->id}}" width=30% height=30%>
-                      </div>
-                      
-                      <input id="image{{$post->id}}" name="img" type="file" accept="image/*">
-                      <br>
-                      <label>タグ</label><br>
-                      @foreach($tags as $tag)
-                        <input type="checkbox" name="tag[]" value="{{$tag->id}}" ><label>{{$tag->name}}</label>
-                      @endforeach
-                      <div class="submit-btn">
-                        <input type="submit" class="btn btn-primary" value="更新">
-                      </div>
-                    </form> -->
-                    {{Form::open(['action' => ['PostsController@update', $post->id] , 'method' => 'post' , 'files' => true ]) }}
-                    {{Form::label('タイトル')}}
-                    {{Form::text('title',$post->title, ['class' => 'form-control'])}}
-                    @if ($errors->has('title'))
-                        <span class="error">{{ $errors->first('title') }}<br></span>
-                    @endif
-                    {{Form::label('本文')}}
-                    {{Form::textarea('content', $post->content, ['class' => 'form-control'])}}
-                    @if ($errors->has('content'))
-                        <span class="error">{{ $errors->first('content') }}</span>
-                    @endif
-                    {{Form::label('画像')}}
-                    <br>
-                    @if ($post->image != null)
-                      <img id="gazou{{$post->id}}" src="/storage/images/{{$post->image}}" width=30% height=30%>
-                    @else
-                      <p id="gazou{{$post->id}}">画像はありません</p>
-                    @endif
-                    <div class="post-edit-image">
-                        <img id="preview{{$post->id}}" width=30% height=30%>
-                    </div>
-                    {{Form::file('img',['id' => "image$post->id", 'accept' => 'image/*'])}}
-                    <br>
-                    {{Form::label('タグ')}}
-                    <br>
-                    @foreach($tags as $tag)
-                    {{Form::checkbox('tag[]',$tag->id)}}{{Form::label($tag->name)}}
-                    @endforeach
-                    <div class="submit-btn">
-                      {{Form::submit('更新',['class' => 'btn btn-primary'])}}
-                    </div>
-                    {{Form::close()}}
-                  </span>
-              </section>
+              <div id="mask" class="hidden"></div>         
+
         </div>
       @endif
       </div>
   @empty
     <li>投稿がありません</li>
   @endforelse
+  <section id="modal" class="hidden">
+    <!-- @if ($modal != null)
+      {{Form::open(['action' => ['PostsController@update', $modal->id] , 'method' => 'post' , 'files' => true ]) }}
+      {{Form::label('タイトル')}}
+      {{Form::text('title',$modal->title, ['class' => 'form-control'])}}
+      @if ($errors->has('title'))
+          <span class="error">{{ $errors->first('title') }}<br></span>
+      @endif
+      {{Form::label('本文')}}
+      {{Form::textarea('content', $modal->content, ['class' => 'form-control'])}}
+      @if ($errors->has('content'))
+          <span class="error">{{ $errors->first('content') }}</span>
+      @endif
+      {{Form::label('画像')}}
+      <br>
+      @if ($post->image != null)
+        <img id="gazou" src="/storage/images/{{$modal->image}}" width=30% height=30%>
+      @else
+        <p id="gazou">画像はありません</p>
+      @endif
+      <div class="post-edit-image">
+          <img id="preview" width=30% height=30%>
+      </div>
+      {{Form::file('img',['id' => "image$post->id", 'accept' => 'image/*'])}}
+      <br>
+      {{Form::label('タグ')}}
+      <br>
+      @foreach($tags as $tag)
+      {{Form::checkbox('tag[]',$tag->id)}}{{Form::label($tag->name)}}
+      @endforeach
+      <div class="submit-btn">
+        {{Form::submit('更新',['class' => 'btn btn-primary'])}}
+      </div>
+      {{Form::close()}}
+    @endif -->
+    <form method="post" enctype="multipart/form-data">
+      {{ csrf_field() }}
+      {{ method_field('patch')}}
+      <label>タイトル</label>
+      <input id="title" type="text" name="title" class="form-control">
+      @if ($errors->has('title'))
+        <span class="error">{{ $errors->first('title') }}<br></span>
+      @endif
+      <label>本文</label>
+      <textarea id="content" name="content" class="form-control" rows="10"></textarea>
+      @if ($errors->has('content'))
+        <span class="error">{{ $errors->first('content') }}</span>
+      @endif
+      <br>
+      <label>画像</label><br>
+      <input type="file" name="image" id="img" accept="image/*">
+      <br>
+      @if ($post->image != null)
+        <img id="gazou"  width=30% height=30%>
+      @else
+        <p id="gazou">画像はありません</p>
+      @endif
+      <div class="post-edit-image">
+          <img id="preview" width=30% height=30%>
+      </div>
+      <br>
+      <label>タグ</label><br>
+      @foreach($tags as $tag)
+        <input type="checkbox" name="tag[]" value="{{$tag->id}}" ><label>{{$tag->name}}</label>
+      @endforeach
+      <div class="submit-btn">
+        <input type="submit" class="btn btn-primary" value="更新">
+      </div>
+    </form>
+  </section>
   </ul>
   {{ $posts->links() }}
   </div>
+  <script src="{{asset('js/main.js') }}"></script>
 @endsection

@@ -36,9 +36,23 @@ Route::group(['middleware' => 'auth'], function(){
 
 
 
-  Route::get('users/{user}', 'UsersController@show');
+  Route::get('/users/{user}', 'UsersController@show')->name('users.show');
+  // Route::post('/users/ajax', function (\Illuminate\Http\Request $request) {
+  //   $data = $request->all();
+  //   $id = $request->post_id;
+  //   return $id;
+  // });
+  Route::post('/users/ajax', 'UsersController@ajax');
+
+  // Route::post('/users',function (\Illuminate\Http\Request $request) {
+  //   $data = $request->all();
+  //   $id = $request->post_id;
+  //   return $id;
+  // });
+
   Route::get('/users/{user}/edit', 'UsersController@edit');
   Route::patch('/users/{user}', 'UsersController@update');
+
 
 });
 

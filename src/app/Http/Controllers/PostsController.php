@@ -100,8 +100,8 @@ class PostsController extends Controller
         if($post->user_id === Auth::id()){
             $post->title = $request->title;
             $post->content = $request->content;
-            if ($request->file('img') != null){
-                $image = $request->file('img')->store('public/images');
+            if ($request->file('image') != null){
+                $image = $request->file('image')->store('public/images');
                 $post->image = substr($image,14);  
             }
     
