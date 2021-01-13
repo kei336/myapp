@@ -54,40 +54,6 @@
     <li>投稿がありません</li>
   @endforelse
   <section id="modal" class="hidden">
-    <!-- @if ($modal != null)
-      {{Form::open(['action' => ['PostsController@update', $modal->id] , 'method' => 'post' , 'files' => true ]) }}
-      {{Form::label('タイトル')}}
-      {{Form::text('title',$modal->title, ['class' => 'form-control'])}}
-      @if ($errors->has('title'))
-          <span class="error">{{ $errors->first('title') }}<br></span>
-      @endif
-      {{Form::label('本文')}}
-      {{Form::textarea('content', $modal->content, ['class' => 'form-control'])}}
-      @if ($errors->has('content'))
-          <span class="error">{{ $errors->first('content') }}</span>
-      @endif
-      {{Form::label('画像')}}
-      <br>
-      @if ($post->image != null)
-        <img id="gazou" src="/storage/images/{{$modal->image}}" width=30% height=30%>
-      @else
-        <p id="gazou">画像はありません</p>
-      @endif
-      <div class="post-edit-image">
-          <img id="preview" width=30% height=30%>
-      </div>
-      {{Form::file('img',['id' => "image$post->id", 'accept' => 'image/*'])}}
-      <br>
-      {{Form::label('タグ')}}
-      <br>
-      @foreach($tags as $tag)
-      {{Form::checkbox('tag[]',$tag->id)}}{{Form::label($tag->name)}}
-      @endforeach
-      <div class="submit-btn">
-        {{Form::submit('更新',['class' => 'btn btn-primary'])}}
-      </div>
-      {{Form::close()}}
-    @endif -->
     <form method="post" enctype="multipart/form-data">
       {{ csrf_field() }}
       {{ method_field('patch')}}

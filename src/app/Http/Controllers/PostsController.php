@@ -108,8 +108,9 @@ class PostsController extends Controller
             $post->save();
             // $page = $request->get('page');
             $user = Auth::id();
+
             $tag = $request->input('tag');
-            $post->tags()->attach($tag);
+            $post->tags()->sync($tag);
             // if($request->edit === "1"){
             //     return redirect("/?page=$page");
             // }else if ($request->edit === "2"){
