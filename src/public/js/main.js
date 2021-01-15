@@ -1,10 +1,7 @@
 'use strict';
 
 {
-    const open = document.querySelectorAll("#open");
-    // idがopenであるすべての要素を定数openに入れる
-    const opens = Array.from(open);
-    
+   
     // 定数opensにopenを配列として入れる
     const close = document.getElementById('close');
   
@@ -33,7 +30,13 @@
           $('form').attr('action', url);
           $('#title').val(data.title);
           $('#content').val(data.content);
-          $('#gazou').attr('src', "/storage/images/"+data.image);
+          if(data.image != null){
+
+            $('#gazou').attr('src', "/storage/images/"+data.image);
+          }else{
+            $('#gazou').hide();
+          }
+          
           modal.classList.remove('hidden');
           mask.classList.remove('hidden'); 
           
@@ -49,6 +52,7 @@
       mask.addEventListener('click', () =>{
         modal.classList.add('hidden');
         mask.classList.add('hidden');
+        $('#gazou').show();
       });
     
   

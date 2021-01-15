@@ -71,11 +71,7 @@
       <label>画像</label><br>
       <input type="file" name="image" id="img" accept="image/*">
       <br>
-      @if ($post->image != null)
-        <img id="gazou"  width=30% height=30%>
-      @else
-        <p id="gazou">画像はありません</p>
-      @endif
+      <img id="gazou"  width=30% height=30%>
       <div class="post-edit-image">
           <img id="preview" width=30% height=30%>
       </div>
