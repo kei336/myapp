@@ -2,9 +2,6 @@
 
 {
    
-    // 定数opensにopenを配列として入れる
-    const close = document.getElementById('close');
-  
     const modal = document.querySelector("#modal");
     const mask = document.getElementById('mask');
     const gazou = document.getElementById('gazou');;
@@ -27,7 +24,7 @@
       .done(function(data) {
           console.log(data);
           const url = "/posts/"+data.id;
-          $('form').attr('action', url);
+          $('#form').attr('action', url);
           $('#title').val(data.title);
           $('#content').val(data.content);
           if(data.image != null){

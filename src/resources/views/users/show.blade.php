@@ -54,7 +54,35 @@
     <li>投稿がありません</li>
   @endforelse
   <section id="modal" class="hidden">
-    <form method="post" enctype="multipart/form-data">
+      {{Form::open(['action' => null, 'method' => 'patch','files' => true, 'id' => 'form'])}}
+      {{Form::label('タイトル')}}
+      {{Form::text('title',null ,['class' => 'form-control', 'id' => 'title'])}}
+      @if ($errors->has('title'))
+          <span class="error">{{ $errors->first('title') }}<br></span>
+      @endif
+      {{Form::label('本文')}}
+      {{Form::textarea('content', null, ['class' => 'form-control', 'id' => 'content'])}}
+      @if ($errors->has('content'))
+          <span class="error">{{ $errors->first('content') }}</span>
+      @endif
+      {{Form::label('画像')}}
+      <br>
+      <img id="gazou"  width=30% height=30%>
+      <div class="post-edit-image">
+          <img id="preview" width=30% height=30%>
+      </div>
+      {{Form::file('img',['name' => "image", 'id' => "img", 'accept' => 'image/*'])}}
+      <br>
+      {{Form::label('タグ')}}
+      <br>
+      @foreach($tags as $tag)
+      {{Form::checkbox('tag[]',$tag->id)}}{{Form::label($tag->name)}}
+      @endforeach
+      <div class="submit-btn">
+        {{Form::submit('更新',['class' => 'btn btn-primary'])}}
+      </div>
+      {{Form::close()}}
+    <!-- <form method="post" enctype="multipart/form-data">
       {{ csrf_field() }}
       {{ method_field('patch')}}
       <label>タイトル</label>
@@ -83,7 +111,7 @@
       <div class="submit-btn">
         <input type="submit" class="btn btn-primary" value="更新">
       </div>
-    </form>
+    </form> -->
   </section>
   </ul>
   {{ $posts->links() }}
