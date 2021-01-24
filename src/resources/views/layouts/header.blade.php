@@ -15,6 +15,7 @@
     <ul class="nav navbar-nav">
     @if(Auth::check())
       <li><a href="{{ url('/posts/new') }}">新規投稿</a></li>
+      <li><a href="{{url('/users')}}">ユーザー一覧</a></li>
       <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
           {{ $user->name }}<b class="caset"></b>

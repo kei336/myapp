@@ -36,6 +36,7 @@ Route::group(['middleware' => 'auth'], function(){
 
 
 
+  Route::get('/users', 'UsersController@index');
   Route::get('/users/{user}', 'UsersController@show')->name('users.show');
   // Route::post('/users/ajax', function (\Illuminate\Http\Request $request) {
   //   $data = $request->all();

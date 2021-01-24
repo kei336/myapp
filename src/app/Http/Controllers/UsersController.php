@@ -10,6 +10,21 @@ use Illuminate\Support\Facades\Auth;
 class UsersController extends Controller
 {
 
+  public function index(Request $request){
+    $users = User::latest()->paginate(6);
+    $query = User::query();
+
+    $search = $request->input('name');
+
+    if($request->has('name')){
+      $query->where('name', 'like', '%'.$search.'%')->get();
+    }
+    $data = $query->paginate(3);
+      return view('users.index')->with([
+        'data' => $data,
+      ]);
+  }
+
   public function show(User $user, Request $request){
     // $page = 1;
     // if (isset($request->page)){
