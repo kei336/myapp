@@ -32,7 +32,9 @@ class PostsController extends Controller
         if(!empty($request->tag)){
             $oneTagRecord = Tag::where('name',$request->tag)
             ->first();
+            // リクエストで送られてきたタグの名前に一致する最初のレコードを取得
             $tag = $oneTagRecord->name;
+            // 一致したレコードのnameを取得
             $data = array(
                 'tag' => $tag
             );
@@ -48,21 +50,20 @@ class PostsController extends Controller
 
         foreach($postList as $postRecord){
             $tags = $postRecord->tags()->orderby('tag_id')->get();
+            // $postListに対してタグをタグID順に取得
             $tagName = [];
             $exchangeArray = 0;
             foreach($tags as $tagRecord){
                 $tagName[] = $tagRecord->name;
+                // 配列にタグのを全て入れる
                 if($request->tag === $tagRecord->name){
                     $exchangeArray = count($tagName) - 1;
+                    // リクエストのタグと一致した場合、変数にいれる　-1は配列に合わせる為
                 }
             }
                    
-            if($exchangeArray != 0){
-                $name = $tagName[0];
-                $tagName[0] = $tagName[$exchangeArray];
-                $tagName[$exchangeArray] = $name;
-            }
             $postRecord['tags'] = $tagName;
+            //送るデータに追加（同foreachで回すため）
         }
         if(Auth::check()){
             return view('posts.index')->with([
