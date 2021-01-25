@@ -16,6 +16,14 @@
   @forelse($posts as $post)
  
     <div class="post-list">
+    @foreach($post->tags as $tag)
+            <a href="/?tag={{$tag->name}}">
+              <div class="tags">
+                {{$tag->name}}
+              </div>
+            </a> 
+      @endforeach
+      <br><br>
       @if ($post->image != null)
           <a href="{{ action('PostsController@show', $post)}}"style="color:black;text-decoration: none;" class="post-title">
             <img src="/storage/images/{{$post->image}}" width=50% height=50% class="post-image">
