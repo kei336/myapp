@@ -17,18 +17,23 @@
         </div>
         @foreach($post->tags as $tag)
             <a href="/?tag={{$tag}}">
-            <div class="tags">
-            {{$tag}}
-            </div>
+              <div class="tags">
+                {{$tag}}
+              </div>
             </a> 
         @endforeach
+        <br><br>
         @if ($post->image != null)
           <a href="{{ action('PostsController@show', $post)}}"style="color:black;text-decoration: none;" class="post-title">
             <img src="/storage/images/{{$post->image}}" width=50% height=50% class="post-image">
           </a>
         @endif
         <br>
-        <a href="{{ action('PostsController@show', $post)}}"style="color:black;text-decoration: none;" class="post-title">タイトル：{{ $post->title }}</a>
+        <a href="{{ action('PostsController@show', $post)}}"style="color:black;text-decoration: none;">
+          <div class="post-title">
+          タイトル：{{ $post->title }}
+          </div>
+        </a>
         <!-- @if($user_id === $post->user_id)
 
           <div class="post-delete">

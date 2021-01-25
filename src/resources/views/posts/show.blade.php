@@ -20,7 +20,11 @@
     @if($tag === null)
       <p>この投稿にタグはありません</p>
     @else
-      <p>{{ $tag->name }}</p>
+      <a href="/?tag={{$tag->name}}">
+        <div class="tags">
+          {{ $tag->name }}
+        </div>
+      </a>
     @endif
   @endforeach
 </div>

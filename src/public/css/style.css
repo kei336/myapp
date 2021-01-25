@@ -43,6 +43,7 @@ header{
   font-size:30px;
   padding-bottom:5px;
 }
+
 .post-edit-image{
   padding-bottom: 10px;;
 }
@@ -59,10 +60,17 @@ header{
 }
 
 .tags{
-  width:40px;
+  width:70px;
   height:30px;
   border: 2px solid skyblue;
   border-radius:10%;
+  float: left;
+  position: static;
+  left:150px;
+  top: -40px;
+  padding-left:20px;
+  margin-left: 4px;
+
 }
 
 #mask{
