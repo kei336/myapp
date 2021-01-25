@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Auth;
 
 class PostsController extends Controller
 {
-
     public function __construct(){
         $user = Auth::user();
         return([
@@ -30,12 +29,50 @@ class PostsController extends Controller
         // $user_name = $aaa->name;
         $user_id = Auth::id();
         // $posts = Post::orderBy('created_at', 'desc')->get();と同じ意味
+        if(!empty($request->tag)){
+            $oneTagRecord = Tag::where('name',$request->tag)
+            ->first();
+            $tag = $oneTagRecord->name;
+            $data = array(
+                'tag' => $tag
+            );
+            $postList = $oneTagRecord->posts()
+            ->latest()->paginate(6);
+        }else{
+            $postList = Post::latest()->paginate(6);
+            $data = array(
+                'tag' => null
+            );
+        }
+        $num = count($postList);
+
+        foreach($postList as $postRecord){
+            $tags = $postRecord->tags()->orderby('tag_id')->get();
+            $tagName = [];
+            $exchangeArray = 0;
+            foreach($tags as $tagRecord){
+                $tagName[] = $tagRecord->name;
+                if($request->tag === $tagRecord->name){
+                    $exchangeArray = count($tagName) - 1;
+                }
+            }
+                   
+            if($exchangeArray != 0){
+                $name = $tagName[0];
+                $tagName[0] = $tagName[$exchangeArray];
+                $tagName[$exchangeArray] = $name;
+            }
+            $postRecord['tags'] = $tagName;
+        }
         if(Auth::check()){
             return view('posts.index')->with([
                 'posts' => $posts,
                 'user_id' => $user_id,
                 // 'page' => $page,''
                 // 'user_name' => $user_name,
+                'postList' => $postList,
+                'num' => $num,
+                'data' => $data,
             ]);
         }
         return view('auth/login');

@@ -8,13 +8,20 @@
 <div class="col-md-12">
   <h1>投稿一覧</h1>
     <ul>
-      @forelse($posts as $post)
+      @forelse($postList as $post)
       <div class="post-list">
         <div class="post-name">
           <a href="{{ action('UsersController@show', $post->user)}}" style="color:black;" >
             {{$post->user->name}}
           </a>
         </div>
+        @foreach($post->tags as $tag)
+            <a href="/?tag={{$tag}}">
+            <div class="tags">
+            {{$tag}}
+            </div>
+            </a> 
+        @endforeach
         @if ($post->image != null)
           <a href="{{ action('PostsController@show', $post)}}"style="color:black;text-decoration: none;" class="post-title">
             <img src="/storage/images/{{$post->image}}" width=50% height=50% class="post-image">
@@ -44,6 +51,7 @@
         <li>投稿がありません</li>
       @endforelse
     </ul>
-    {{ $posts->links() }}
+      {{ $postList->appends($data)->links() }}
+    
 </div>
 @endsection
